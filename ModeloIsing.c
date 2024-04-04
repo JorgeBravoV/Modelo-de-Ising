@@ -8,13 +8,13 @@ double energia(int*s,int*xp,int*yp);
 void guardaConfiguracion(int*s);
 void escribe_fichero(double energia,int iteracion,FILE*f);
 void guardaMagnetizacion(int*s,int iteracion,FILE*f);
-void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double min, double max);
+void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max);
 
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
     srand(705);
     int flag,i,j, indice=0, t_termalizacion=5,estabilidad=0;
-    int N_iter=500;
+    int N_iter=1000;
     int epsilon=5;
     flag=0;
     int red[L*L];
@@ -26,7 +26,7 @@ int main(){
         memoriza_delta_energia[i]=L*L*L;
 
 
-    double beta=0.44;
+    double beta=0.440;
 
 
 
@@ -58,7 +58,7 @@ f=fopen("energy.txt","wt");
 g=fopen("magnetization.txt","wt");
 */
 
-int N_conf=1000, N_interval=50,k;
+int N_conf=20000, N_interval=50,k;
 double datos_energia[N_conf];
 double histograma_energia[N_interval];
 
@@ -127,13 +127,13 @@ for (i=0; i<N_iter; i++){
 }
 
 double delta;
-double min=0.65, max=1;
+double min=0, max=1;
 FILE*F,*G;
 F=fopen("hist_energy.txt", "wt");
 G=fopen("aversiva.txt", "wt");
 for (i=0;i<N_conf;i++)
         fprintf(G,"%d %lf\n",i,datos_energia[i]);
-    Histogram(datos_energia,histograma_energia,N_conf,N_interval,&delta,min,max);
+    Histogram(datos_energia,histograma_energia,N_conf,N_interval,&delta,&min,&max);
 
     for (i=0;i<N_interval;i++)
         fprintf(F,"%lf %lf\n",min+i*delta,histograma_energia[i]);
@@ -263,25 +263,31 @@ void escribe_fichero(double energia,int iteracion,FILE*f){
 void guardaMagnetizacion(int*s,int iteracion,FILE*f){
     fprintf(f,"%d %lf\n",iteracion,magnetizacion(s));
 }
-void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double min, double max)
+void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max)
 {
 //Definimos mínimo y máximo:
+*min=100;
+*max=0;
 
 int i;
+for (i=-0;i<N_data;i++){
+if(-input[i]<*min)
+*min=-input[i];
+if (-input[i]>*max)
+*max=-input[i];
+}
 
 //Definimos los numeros que contiene cada intervalo como delta:
-*delta=(max-min)/(double)N_interval;
+*delta=(*max-*min)/N_interval;
 //Definimos un entero que serán las celdas en las que estarán los diferentes números.
 int celda;
 //PARTE IMPORTANTE DEL PROGRAMA:
-for (i=0;i<N_interval;i++){
+for (i=0;i<N_interval;i++)
 output[i]=0;
-}
 for (i=0;i<N_data;i++){
-celda=-(int)((input[i]-min)/(*delta));
-if(celda==N_interval){
+celda=(int)((-input[i]-(*min))/(*delta));
+if(celda==N_interval)
 celda=celda-1;
-}
 output[celda]++;
 }
 //Normalizamos: 1=suma(delta*altura)*A=A*delta*suma[i]=A*delta*N_data
