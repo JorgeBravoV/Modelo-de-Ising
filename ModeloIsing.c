@@ -1,7 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
 #define L 16
+
+//para generacion de numeros aleatorios
+#define NormRANu (2.3283063671E-10F)
+
+unsigned int irr[256];
+unsigned int ir1;
+unsigned char ind_ran,ig1,ig2,ig3;
+void ini_ran(int SEMILLA);
+float Random(void);
+
 void configura(int*s, int flag);
 double alea0_1();
 double energia(int*s,int*xp,int*yp);
@@ -10,14 +21,16 @@ void escribe_fichero(double energia,int iteracion,FILE*f);
 void guardaMagnetizacion(int*s,int iteracion,FILE*f);
 void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max);
 
+
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
     srand(705);
     int flag,i,j, indice=0, t_termalizacion=5,estabilidad=0;
-    int N_iter=1000;
+    int N_iter=50;
     int epsilon=5;
     flag=0;
     int red[L*L];
+    ini_ran(1234); //PARISI RAPUANO - SEMILLA=1234
     double memoriza_energia[N_iter], memoriza_delta_energia[epsilon];
     double E_media,e_media,E_vieja,E_nueva,suma=0,suma_energia=0;
     
@@ -26,7 +39,7 @@ int main(){
         memoriza_delta_energia[i]=L*L*L;
 
 
-    double beta=0.440;
+    double beta=0.55;
 
 
 
@@ -58,13 +71,14 @@ f=fopen("energy.txt","wt");
 g=fopen("magnetization.txt","wt");
 */
 
-int N_conf=20000, N_interval=50,k;
+int N_conf=50, N_interval=10,k;
 double datos_energia[N_conf];
 double histograma_energia[N_interval];
 
 
 
 for (k=0; k<N_conf; k++){
+        srand((unsigned int)k);
                 configura(red,flag);
                 E_vieja=energia(red,x_right,y_up);
 
@@ -77,7 +91,6 @@ for (i=0; i<N_iter; i++){
 
     E_nueva=energia(red,x_right,y_up);
 
-//***********************************************************************************************************************************************************
 // TODA ESTA PARTE ES PARA CALCULAR EL TIEMPO DE TERMALIZACIÓN. SI TOMAMOS ESTE TIEMPO FIJO SE DEBE QUITAR (poniendo estabilidad=1)
 
     // Ahora queremos ver cuando las medidas se hacen estables. Para ello guardamos las variaciones de energia en un array.
@@ -99,12 +112,11 @@ for (i=0; i<N_iter; i++){
                     t_termalizacion=0;
             estabilidad=1;  // Para que el if solo se haga una vez.
         
-//**********************************************************************************************************************************************
 // HASTA AQUÍ SE PODRÍA QUITAR
 
     }
      if(estabilidad==0){
-        memoriza_energia[indice]=E_vieja;
+        memoriza_energia[indice]=E_vieja; 
     }else if(i>=t_termalizacion){
         memoriza_energia[i-t_termalizacion]=E_vieja;
     
@@ -123,20 +135,21 @@ for (i=0; i<N_iter; i++){
         }
     E_media=suma_energia/(N_iter-t_termalizacion); // Ya tenemos la energia extensiva media.
     e_media=E_media/(2*L*L); // Y esta es la energía intensiva media (es decir, está entre siempre -1, y 1).
+printf("%lf ",e_media);
     datos_energia[k]=e_media;
 }
 
 double delta;
 double min=0, max=1;
 FILE*F,*G;
-F=fopen("hist_energy.txt", "wt");
+F=fopen("Hist_energy.txt", "wt");
 G=fopen("aversiva.txt", "wt");
 for (i=0;i<N_conf;i++)
         fprintf(G,"%d %lf\n",i,datos_energia[i]);
     Histogram(datos_energia,histograma_energia,N_conf,N_interval,&delta,&min,&max);
 
     for (i=0;i<N_interval;i++)
-        fprintf(F,"%lf %lf\n",min+i*delta,histograma_energia[i]);
+        fprintf(F,"%d %lf\n",i,histograma_energia[i]);
     fclose(F);
     fclose(G);
 
@@ -149,35 +162,36 @@ for (i=0;i<N_conf;i++)
  // guardaConfiguracion(red);
 }
 
-
+/*
 double alea0_1(){
 return rand()/((double)RAND_MAX+1.0);
-
 }
+*/
+
 void configura(int *s, int flag){
-int i;
-double x;
-int spin;
-switch (flag){
-case 0:
-for (i=0;i<L*L;i++){
-x=alea0_1();
-if (x<0.5)
-s[i]=1;
-else
-s[i]=-1;
-}
-break;
-case 1:
-x=alea0_1();
-if (x<0.5)
-spin='1';
-else
-spin=-1;
-for (i=0;i<L*L;i++)
-s[i]=spin;
+    int i;
+    double x;
+    int spin;
+    switch (flag){
+        case 0:
+            for (i=0;i<L*L;i++){
+            x=Random();
+            if (x<0.5)
+                s[i]=1;
+            else
+                s[i]=-1;
+            }
+        break;
+        case 1:
+            x=Random();
+            if (x<0.5)
+                spin='1';
+            else
+                spin=-1;
+            for (i=0;i<L*L;i++)
+                s[i]=spin;
 
-break;
+        break;
 
 }
 }
@@ -245,7 +259,7 @@ for (i=0;i<L;i++)
        indice=s[n]*(s[n+x_right[j]]+s[n+x_left[j]]+s[n+y_up[i]]+s[n+y_down[i]])/2+2;
        cociente=expon[indice];
         // Ahora utilizamos el algoritmo de metrópolis para ver si aceptamos o no el cambio de spin que hemos supuesto:
-        if(alea0_1()<cociente)
+        if(Random()<cociente)
             s[n]=-s[n];
         n++;
     }
@@ -271,10 +285,10 @@ void Histogram(double *input, double *output, int N_data, int N_interval, double
 
 int i;
 for (i=-0;i<N_data;i++){
-if(-input[i]<*min)
-*min=-input[i];
-if (-input[i]>*max)
-*max=-input[i];
+if(input[i]<*min)
+*min=input[i];
+if (input[i]>*max)
+*max=input[i];
 }
 
 //Definimos los numeros que contiene cada intervalo como delta:
@@ -285,7 +299,7 @@ int celda;
 for (i=0;i<N_interval;i++)
 output[i]=0;
 for (i=0;i<N_data;i++){
-celda=(int)((-input[i]-(*min))/(*delta));
+celda=(int)((input[i]-(*min))/(*delta));
 if(celda==N_interval)
 celda=celda-1;
 output[celda]++;
@@ -296,6 +310,40 @@ A=1/(*delta*N_data);
 for (i=0;i<N_interval;i++)
 output[i]=A*output[i];
 
+}
 
+float Random(void){ //Parisi-Rapuano
+    float r;
 
+    //genermamos un numero aleatorio a la vez que modificamos un numero de la rueda
+
+    ig1=ind_ran - 24;   //los numeros magicos
+    ig2=ind_ran - 55;
+    ig3=ind_ran - 61;
+    irr[ind_ran]=irr[ig1]+irr[ig2]; //cambiamos la propia rueda
+    ir1=(irr[ind_ran]^irr[ig3]);    //numero random
+    ind_ran++;
+    r=ir1*NormRANu;
+    //printf("r=%f\n",r);
+    return r;
+
+}
+
+//iniciar numeros aleatorios
+void ini_ran(int SEMILLA)
+{
+    int INI,FACTOR,SUM,i;
+
+    srand(SEMILLA);
+
+    INI=SEMILLA;
+    FACTOR=67397;
+    SUM=7364893;
+
+    for(i=0;i<256;i++)
+    {
+        INI=(INI*FACTOR+SUM);
+        irr[i]=INI;
+    }
+    ind_ran=ig1=ig2=ig3=0;
 }
