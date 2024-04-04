@@ -8,4 +8,4 @@ set key outside right center
 
 set xrange[0:500]
 set yrange[-1:1]
-plot 'magnetization.txt' u 1:2 w l t'E(t)',\
+plot 'magnetization.txt' u 1:2 w l t'm(t)',\

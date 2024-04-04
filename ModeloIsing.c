@@ -8,7 +8,7 @@ double energia(int*s,int*xp,int*yp);
 void guardaConfiguracion(int*s);
 void escribe_fichero(double energia,int iteracion,FILE*f);
 void guardaMagnetizacion(int*s,int iteracion,FILE*f);
-void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max);
+void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double min, double max);
 
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
@@ -58,7 +58,7 @@ f=fopen("energy.txt","wt");
 g=fopen("magnetization.txt","wt");
 */
 
-int N_conf=50, N_interval=10,k;
+int N_conf=100, N_interval=20,k;
 double datos_energia[N_conf];
 double histograma_energia[N_interval];
 
@@ -78,6 +78,7 @@ for (i=0; i<N_iter; i++){
 
     E_nueva=energia(red,x_right,y_up);
 
+//***********************************************************************************************************************************************************
 // TODA ESTA PARTE ES PARA CALCULAR EL TIEMPO DE TERMALIZACIÓN. SI TOMAMOS ESTE TIEMPO FIJO SE DEBE QUITAR (poniendo estabilidad=1)
 
     // Ahora queremos ver cuando las medidas se hacen estables. Para ello guardamos las variaciones de energia en un array.
@@ -99,6 +100,7 @@ for (i=0; i<N_iter; i++){
                     t_termalizacion=0;
             estabilidad=1;  // Para que el if solo se haga una vez.
         
+//**********************************************************************************************************************************************
 // HASTA AQUÍ SE PODRÍA QUITAR
 
     }
@@ -129,14 +131,14 @@ printf("%lf ",e_media);
 double delta;
 double min=0, max=1;
 FILE*F,*G;
-F=fopen("Hist_energy.txt", "wt");
+F=fopen("hist_energy.txt", "wt");
 G=fopen("aversiva.txt", "wt");
 for (i=0;i<N_conf;i++)
         fprintf(G,"%d %lf\n",i,datos_energia[i]);
-    Histogram(datos_energia,histograma_energia,N_conf,N_interval,&delta,&min,&max);
+    Histogram(datos_energia,histograma_energia,N_conf,N_interval,&delta,min,max);
 
     for (i=0;i<N_interval;i++)
-        fprintf(F,"%d %lf\n",i,histograma_energia[i]);
+        fprintf(F,"%lf %lf\n",i*delta,histograma_energia[i]);
     fclose(F);
     fclose(G);
 
@@ -263,31 +265,25 @@ void escribe_fichero(double energia,int iteracion,FILE*f){
 void guardaMagnetizacion(int*s,int iteracion,FILE*f){
     fprintf(f,"%d %lf\n",iteracion,magnetizacion(s));
 }
-void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max)
+void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double min, double max)
 {
 //Definimos mínimo y máximo:
-*min=100;
-*max=0;
 
 int i;
-for (i=-0;i<N_data;i++){
-if(input[i]<*min)
-*min=input[i];
-if (input[i]>*max)
-*max=input[i];
-}
 
 //Definimos los numeros que contiene cada intervalo como delta:
-*delta=(*max-*min)/N_interval;
+*delta=(max-min)/(double)N_interval;
 //Definimos un entero que serán las celdas en las que estarán los diferentes números.
 int celda;
 //PARTE IMPORTANTE DEL PROGRAMA:
-for (i=0;i<N_interval;i++)
+for (i=0;i<N_interval;i++){
 output[i]=0;
+}
 for (i=0;i<N_data;i++){
-celda=(int)((input[i]-(*min))/(*delta));
-if(celda==N_interval)
+celda=-(int)((input[i]-min)/(*delta));
+if(celda==N_interval){
 celda=celda-1;
+}
 output[celda]++;
 }
 //Normalizamos: 1=suma(delta*altura)*A=A*delta*suma[i]=A*delta*N_data
