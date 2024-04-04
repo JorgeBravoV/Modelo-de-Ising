@@ -26,8 +26,8 @@ double magnetizacion(int *s);   //M
 void Vector_Medidas(int *s,double *vec_mag,double *vec_energ,int *xp, int *yp, int N_m);
 void var(double *serie,int Numero, double *Media, double *Varianza);
 void inicio_vectores(double *e_medio,double *e_medio_cuadrado,double *m_medio,double *m_medio_cuadrado,double *m_medio_absoluto,double *Cv,double *X,double *var_energia,double *var_magnetizacion,int N_pasos);
-void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado[],double m_medio_absoluto[], double m_medio_cuadrado[],double X[], double Cv[],double error_energia[],double error_magnetizacion[], int N_pasos);
-void calculaValoresMedios(int N_med,double *Energia,double *Magnetizacion,double *mediaEnergia,double *mediaMagnetizacion,double *media2Energia,double *media2Magnetizacion,double *mediaMagnetizacionAbsoluta,double *Cv,double *X,double *error_energia,double *error_magnetizacion,int beta);
+void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado[],double m_medio_absoluto[], double m_medio_cuadrado[],double X[], double Cv[],double error_energia[],double error_magnetizacion[], int N_pasos,double beta_inicial,double beta_final,double delta_beta);
+void calculaValoresMedios(int N_med,double *Energia,double *Magnetizacion,double *mediaEnergia,double *mediaMagnetizacion,double *media2Energia,double *media2Magnetizacion,double *mediaMagnetizacionAbsoluta,double *Cv,double *X,double *error_energia,double *error_magnetizacion,int beta,int sentido,int N_pasos);
 
 int main(){
 
@@ -60,8 +60,8 @@ int main(){
 
     double vec_energ[N_med];
     double vec_mag[N_med];
-    double e_medio[N_pasos], e_medio_cuadrado[N_pasos], m_medio[N_pasos], m_medio_cuadrado[N_pasos], m_medio_absoluto[N_pasos], Cv[N_pasos], X[N_pasos],error_energia[N_pasos],error_magnetizacion[N_pasos];
-    inicio_vectores(e_medio,e_medio_cuadrado,m_medio,m_medio_cuadrado,m_medio_absoluto,Cv,X,error_energia,error_magnetizacion,N_pasos);
+    double e_medio[2*N_pasos], e_medio_cuadrado[2*N_pasos], m_medio[2*N_pasos], m_medio_cuadrado[2*N_pasos], m_medio_absoluto[2*N_pasos], Cv[2*N_pasos], X[2*N_pasos],error_energia[2*N_pasos],error_magnetizacion[2*N_pasos];
+    inicio_vectores(e_medio,e_medio_cuadrado,m_medio,m_medio_cuadrado,m_medio_absoluto,Cv,X,error_energia,error_magnetizacion,2*N_pasos);
 
     //Construimos los desplazamientos
     int x_right[L];
@@ -113,7 +113,7 @@ int main(){
                 }
                 Vector_Medidas(s,vec_mag,vec_energ,x_right,y_up,N_m); //calculo directamnete y meto los resultados en un vector
             }
-            calculaValoresMedios(N_med,vec_energ,vec_mag,e_medio,m_medio,e_medio_cuadrado, m_medio_cuadrado,m_medio_absoluto,Cv,X,error_energia,error_magnetizacion,N_betas);
+            calculaValoresMedios(N_med,vec_energ,vec_mag,e_medio,m_medio,e_medio_cuadrado, m_medio_cuadrado,m_medio_absoluto,Cv,X,error_energia,error_magnetizacion,N_betas,sentido,N_pasos);
             beta+=delta_beta;
 
 
@@ -126,7 +126,7 @@ int main(){
     }
 
 
-    escribir_fichero(e_medio,m_medio,e_medio_cuadrado,m_medio_absoluto,m_medio_cuadrado,X,Cv,error_energia,error_magnetizacion,N_pasos);
+    escribir_fichero(e_medio,m_medio,e_medio_cuadrado,m_medio_absoluto,m_medio_cuadrado,X,Cv,error_energia,error_magnetizacion,N_pasos,beta_inicial,beta_final,delta_beta);
 
 
 
@@ -137,67 +137,122 @@ int main(){
 
     return 0;
 }
-void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado[],double m_medio_absoluto[], double m_medio_cuadrado[],double X[], double Cv[],double error_energia[],double error_magnetizacion[], int N_pasos){
-    int i;
+void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado[],double m_medio_absoluto[], double m_medio_cuadrado[],double X[], double Cv[],double error_energia[],double error_magnetizacion[], int N_pasos,double beta_inicial,double beta_final,double delta_beta){
+    int i,j;
+    double beta=beta_inicial;
     FILE *f1,*f2,*f3,*f4,*f5,*f6,*f7,*f8,*f9;
     f1=fopen("Ficheros de salida/e_medio.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f1,"\n%lf",e_medio[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f1,"%0.2lf\t%lf\n",beta,e_medio[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f1);
+    beta=beta_inicial;
     f2=fopen("Ficheros de salida/m_medio.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f2,"\n%lf",m_medio[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f2,"%0.2lf\t%lf\n",beta,m_medio[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f2);
+    beta=beta_inicial;
     f3=fopen("Ficheros de salida/m_medio_cuadrado.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f3,"\n%lf",m_medio_cuadrado[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f3,"%0.2lf\t%lf\n",beta,m_medio_cuadrado[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f3);
+    beta=beta_inicial;
     f4=fopen("Ficheros de salida/m_medio_absoluto.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f4,"\n%lf",m_medio_absoluto[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f4,"%0.2lf\t%lf\n",beta,m_medio_absoluto[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f4);
+    beta=beta_inicial;
     f5=fopen("Ficheros de salida/X.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f5,"\n%lf",X[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f5,"%0.2lf\t%lf\n",beta,X[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f5);
+    beta=beta_inicial;
     f6=fopen("Ficheros de salida/Cv.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f6,"\n%lf",Cv[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f6,"%0.2lf\t%lf\n",beta,Cv[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f6);
+    beta=beta_inicial;
     f7=fopen("Ficheros de salida/Error_energia.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f7,"\n%lf",error_energia[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f7,"%0.2lf\t%lf\n",beta,error_energia[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f7);
+    beta=beta_inicial;
     f8=fopen("Ficheros de salida/Error_magnetizacion.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f8,"\n%lf",error_magnetizacion[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f8,"%0.2lf\t%lf\n",beta,error_magnetizacion[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f8);
+    beta=beta_inicial;
     f9=fopen("Ficheros de salida/e_medio_cuadrado.txt","wt");
-            for(i=0;i<N_pasos;i++)
-                fprintf(f9,"\n%lf",e_medio_cuadrado[i]);
+        for(j=0;j<2;j++){
+            for(i=0;i<N_pasos;i++){
+                fprintf(f9,"%0.2lf\t%lf\n",beta,e_medio_cuadrado[j*N_pasos+i]);
+                beta+=delta_beta;
+            }
+            delta_beta=-delta_beta;
+        }
     fclose(f9);
 }
 
 
-void calculaValoresMedios(int N_med,double *Energia,double *Magnetizacion,double *mediaEnergia,double *mediaMagnetizacion,double *media2Energia,double *media2Magnetizacion,double *mediaMagnetizacionAbsoluta,double *Cv,double *X,double *error_energia,double *error_magnetizacion,int beta){
+void calculaValoresMedios(int N_med,double *Energia,double *Magnetizacion,double *mediaEnergia,double *mediaMagnetizacion,double *media2Energia,double *media2Magnetizacion,double *mediaMagnetizacionAbsoluta,double *Cv,double *X,double *error_energia,double *error_magnetizacion,int beta,int sentido,int N_pasos){
     int i;
+    int indice=sentido*N_pasos+beta;
     for(i=0;i<N_med;i++){
-        mediaEnergia[beta]+=Energia[i];
-        mediaMagnetizacion[beta]+=Magnetizacion[i];
-        media2Energia[beta]+=Energia[i]*Energia[i];
-        media2Magnetizacion[beta]+=Magnetizacion[i]*Magnetizacion[i];
+        mediaEnergia[indice]+=Energia[i];
+        mediaMagnetizacion[indice]+=Magnetizacion[i];
+        media2Energia[indice]+=Energia[i]*Energia[i];
+        media2Magnetizacion[indice]+=Magnetizacion[i]*Magnetizacion[i];
     }
-    mediaEnergia[beta]/=N_med;
-    mediaMagnetizacion[beta]/=N_med;
-    media2Energia[beta]/=N_med;
-    media2Magnetizacion[beta]/=N_med;
-    mediaMagnetizacionAbsoluta[beta]=fabs(mediaMagnetizacion[beta]);
-    Cv[beta]=2*L*L*(media2Energia[beta]-mediaEnergia[beta]);
-    X[beta]=L*L*(media2Magnetizacion[beta]-mediaMagnetizacionAbsoluta[beta]);
-    var(Energia,N_med,&mediaEnergia[beta],&error_energia[beta]);
-    var(Magnetizacion,N_med,&mediaMagnetizacion[beta],&error_magnetizacion[beta]);
-    error_energia[beta]=sqrt(error_energia[beta])/N_med;
-    error_magnetizacion[beta]=sqrt(error_magnetizacion[beta])/N_med;
+    mediaEnergia[indice]/=N_med;
+    mediaMagnetizacion[indice]/=N_med;
+    media2Energia[indice]/=N_med;
+    media2Magnetizacion[indice]/=N_med;
+    mediaMagnetizacionAbsoluta[indice]=fabs(mediaMagnetizacion[indice]);
+    Cv[indice]=2*L*L*(media2Energia[indice]-mediaEnergia[indice]);
+    X[indice]=L*L*(media2Magnetizacion[indice]-mediaMagnetizacionAbsoluta[indice]);
+    var(Energia,N_med,&mediaEnergia[indice],&error_energia[indice]);
+    var(Magnetizacion,N_med,&mediaMagnetizacion[indice],&error_magnetizacion[indice]);
+    error_energia[indice]=sqrt(error_energia[indice])/N_med;
+    error_magnetizacion[indice]=sqrt(error_magnetizacion[indice])/N_med;
 }
 void var(double *serie,int Numero, double *Media, double *Varianza){
 	int i;
@@ -343,15 +398,15 @@ void lee_input(double *beta_inicial,double *beta_final,double *delta_beta,int *f
         if(strcmp(ptr,"delta_beta")==0)
             *delta_beta=number;
         if(strcmp(ptr,"N_Ter")==0)
-            *N_Ter=number;
+            *N_Ter=(int)number;
         if(strcmp(ptr,"N_med")==0)
-            *N_med=number;
+            *N_med=(int)number;
         if(strcmp(ptr,"N_Met")==0)
-            *N_Met=number;
+            *N_Met=(int)number;
         if(strcmp(ptr,"flag")==0)
-            *flag=number;
+            *flag=(int)number;
         if(strcmp(ptr,"semilla")==0)
-            *semilla=number;
+            *semilla=(int)number;
     }
     fclose(f_in);
 }
