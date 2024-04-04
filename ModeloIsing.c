@@ -14,7 +14,7 @@ void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, i
 int main(){
     srand(705);
     int flag,i,j, indice=0, t_termalizacion=5,estabilidad=0;
-    int N_iter=50;
+    int N_iter=500;
     int epsilon=5;
     flag=0;
     int red[L*L];
@@ -26,7 +26,7 @@ int main(){
         memoriza_delta_energia[i]=L*L*L;
 
 
-    double beta=0.55;
+    double beta=0.44;
 
 
 
@@ -58,14 +58,13 @@ f=fopen("energy.txt","wt");
 g=fopen("magnetization.txt","wt");
 */
 
-int N_conf=100, N_interval=20,k;
+int N_conf=1000, N_interval=50,k;
 double datos_energia[N_conf];
 double histograma_energia[N_interval];
 
 
 
 for (k=0; k<N_conf; k++){
-        srand((unsigned int)k);
                 configura(red,flag);
                 E_vieja=energia(red,x_right,y_up);
 
@@ -105,7 +104,7 @@ for (i=0; i<N_iter; i++){
 
     }
      if(estabilidad==0){
-        memoriza_energia[indice]=E_vieja; 
+        memoriza_energia[indice]=E_vieja;
     }else if(i>=t_termalizacion){
         memoriza_energia[i-t_termalizacion]=E_vieja;
     
@@ -124,12 +123,11 @@ for (i=0; i<N_iter; i++){
         }
     E_media=suma_energia/(N_iter-t_termalizacion); // Ya tenemos la energia extensiva media.
     e_media=E_media/(2*L*L); // Y esta es la energía intensiva media (es decir, está entre siempre -1, y 1).
-printf("%lf ",e_media);
     datos_energia[k]=e_media;
 }
 
 double delta;
-double min=0, max=1;
+double min=0.65, max=1;
 FILE*F,*G;
 F=fopen("hist_energy.txt", "wt");
 G=fopen("aversiva.txt", "wt");
@@ -138,7 +136,7 @@ for (i=0;i<N_conf;i++)
     Histogram(datos_energia,histograma_energia,N_conf,N_interval,&delta,min,max);
 
     for (i=0;i<N_interval;i++)
-        fprintf(F,"%lf %lf\n",i*delta,histograma_energia[i]);
+        fprintf(F,"%lf %lf\n",min+i*delta,histograma_energia[i]);
     fclose(F);
     fclose(G);
 
