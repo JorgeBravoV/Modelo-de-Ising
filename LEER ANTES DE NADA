@@ -13,7 +13,7 @@ TERMALIZACIÓN - LO HACE JORGE
 
 HISTOGRAMAS
     L=16
-        magnetización
+        magnetización   
         energia         
     L=32
         magnetización
@@ -26,7 +26,7 @@ HISTOGRAMAS
         energia
 
 Gráficas 
-    L=16
+    L=16 - LO HACE JOEL
         energia media + error   
         magnetizacion media + error
         calor especifica    
