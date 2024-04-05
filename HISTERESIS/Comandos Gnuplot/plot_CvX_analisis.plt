@@ -3,7 +3,7 @@ set output 'C:\Users\USUARIO\Documents\UNIZAR\Segundo\Segundo cuatri\Física Com
 
 set term svg size 1280, 480
 set xlabel 'β' font ",18"
-set ylabel 'Calor especifico' font ",18"
+set ylabel 'Susceptibilidad' font ",18"
 
 set xtics font ",16"
 set ytics font ",16"
