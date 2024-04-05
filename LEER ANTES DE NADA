@@ -1,0 +1,47 @@
+LISTA DE LAS COSAS QUE HACER, CUANDO LO HAGAMOS, MARCAMOS QUE ESTAN HECHAS Y QUIEN LAS HA HECHO
+
+TERMALIZACIÓN
+    Analisis en L
+    analisis en beta
+
+HISTOGRAMAS
+    L=16
+        magnetización 
+        energia
+    L=32
+        magnetización
+        energia
+    L=64
+        magnetización
+        energia
+    L=128
+        magnetización
+        energia
+
+Gráficas 
+    L=16
+        energia media + error
+        magnetizacion media + error
+        calor especifica
+        susceptibilidad
+    L=32
+        energia media + error
+        magnetizacion media + error
+        calor especifica
+        susceptibilidad
+    L=64
+        energia media + error
+        magnetizacion media + error
+        calor especifica
+        susceptibilidad
+    L=128
+        energia media + error
+        magnetizacion media + error
+        calor especifica
+        susceptibilidad
+
+Analisis
+    Beta crítica  - sacada de Cv
+    error de beta 
+    extrapolar al ininito
+
