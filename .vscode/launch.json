@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/USUARIO/Documents/UNIZAR/Segundo/Segundo cuatri/Física Computacional/Nueva carpeta/Modelo-de-Ising/HISTERESIS",
-      "program": "c:/Users/USUARIO/Documents/UNIZAR/Segundo/Segundo cuatri/Física Computacional/Nueva carpeta/Modelo-de-Ising/HISTERESIS/build/Debug/outDebug",
+      "cwd": "c:/Users/pablo/OneDrive/Escritorio/FISICA/Segundo Física/S2/Física computacional/Modelo-de-Ising/HISTERESIS",
+      "program": "c:/Users/pablo/OneDrive/Escritorio/FISICA/Segundo Física/S2/Física computacional/Modelo-de-Ising/HISTERESIS/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

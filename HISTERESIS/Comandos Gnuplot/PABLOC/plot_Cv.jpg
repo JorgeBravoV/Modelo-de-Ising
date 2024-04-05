@@ -1,0 +1,16 @@
+set term svg
+set output 'C:\Users\pablo\OneDrive\Escritorio\FISICA\Segundo Física\S2\Física computacional\Modelo-de-Ising\HISTERESIS\Graficas\L 128\histeresis_Cv.svg'
+
+set term svg size 1280, 480
+set xlabel 'β' font ",18"
+set ylabel 'Energia media' font ",18"
+
+
+set xtics font ",16"
+set ytics font ",16"
+
+set xrange[0:1]
+
+plot 'C:\Users\pablo\OneDrive\Escritorio\FISICA\Segundo Física\S2\Física computacional\Modelo-de-Ising\HISTERESIS\Ficheros de salida\L 128\Cv.txt' u 1:2 w l lc rgb "blue" t'CALOR ESPECIFICO',\
+
+
