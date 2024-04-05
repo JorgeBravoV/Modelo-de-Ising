@@ -119,7 +119,7 @@
 	</g>
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<path stroke='rgb(  0, 112,   0)'  d='M1220.65,220.21 L1263.21,220.21 M89.31,421.67 L108.75,416.80 L128.19,413.10 L147.63,409.28 L167.06,405.76 L186.50,401.68
+	<path stroke='rgb(  0,   0, 255)'  d='M1220.65,220.21 L1263.21,220.21 M89.31,421.67 L108.75,416.80 L128.19,413.10 L147.63,409.28 L167.06,405.76 L186.50,401.68
 		L205.94,397.86 L225.38,393.36 L244.82,388.13 L264.26,383.51 L283.70,377.27 L303.13,371.24 L322.57,364.45 L342.01,358.41
 		L361.45,350.66 L380.89,341.63 L400.33,332.19 L419.77,321.48 L439.20,309.85 L458.64,296.31 L478.08,278.50 L497.52,257.25
 		L516.96,226.26 L536.40,185.99 L555.84,163.31 L575.28,150.47 L594.71,139.49 L614.15,130.46 L633.59,123.35 L653.03,118.02
@@ -134,7 +134,7 @@
 		L225.38,393.63 L205.94,397.00 L186.50,402.38 L167.06,406.29 L147.63,409.94 L128.19,413.07 L108.75,416.48 L89.31,416.35
 		 '/></g>
 	</g>
-<g fill="none" color="white" stroke="rgb(  0, 112,   0)" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+<g fill="none" color="white" stroke="rgb(  0,   0, 255)" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
 </g>
