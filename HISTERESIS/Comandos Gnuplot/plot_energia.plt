@@ -2,10 +2,12 @@ set term svg
 set output 'C:\Users\joelg\OneDrive\Escritorio\Computacional\Trabajo Modelo de Ising\Modelo-de-Ising\HISTERESIS\Graficas\histeresis_energia_media.svg'
 
 set term svg size 1280, 480
-set xlabel 'β'
-set ylabel 'Energia media'
+set xlabel 'β' font ",18"
+set ylabel 'Energia media' font ",18"
 
-set key outside right center
+
+set xtics font ",16"
+set ytics font ",16"
 
 set xrange[0:1]
 
