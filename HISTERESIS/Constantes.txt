@@ -1,8 +1,8 @@
 flag 0
-semilla 12345
+semilla 1234
 beta_inicial 0
-beta_final 2.0
-delta_beta 0.05
-N_Ter 500
-N_med 5000
+beta_final 1.0
+delta_beta 0.02
+N_Ter 0
+N_med 50
 N_Met 5

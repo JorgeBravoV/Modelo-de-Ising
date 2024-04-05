@@ -5,7 +5,7 @@
 #include <time.h>
 
 
-#define L 24
+#define L 64
 
 //para generacion de numeros aleatorios
 #define NormRANu (2.3283063671E-10F)
@@ -54,7 +54,7 @@ int main(){
 
     lee_input(&beta_inicial,&beta_final,&delta_beta,&flag,&semilla,&N_Ter,&N_med,&N_Met);
 
-    N_pasos=(beta_final-beta_inicial)/delta_beta;
+    N_pasos=(beta_final-beta_inicial)/delta_beta+1;
     beta=beta_inicial;
 
 
@@ -119,6 +119,7 @@ int main(){
 
         }
         delta_beta=-delta_beta;
+        beta+=delta_beta;
 
         printf("a");
 
@@ -148,6 +149,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f1);
     beta=beta_inicial;
@@ -158,6 +160,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f2);
     beta=beta_inicial;
@@ -168,6 +171,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f3);
     beta=beta_inicial;
@@ -178,6 +182,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f4);
     beta=beta_inicial;
@@ -188,6 +193,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f5);
     beta=beta_inicial;
@@ -198,6 +204,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f6);
     beta=beta_inicial;
@@ -208,6 +215,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f7);
     beta=beta_inicial;
@@ -218,6 +226,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f8);
     beta=beta_inicial;
@@ -228,6 +237,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
+            beta+=delta_beta;
         }
     fclose(f9);
 }
@@ -276,7 +286,7 @@ double energia(int *s,int *xp,int *yp){ //E
         }
     }
 
-    return E/L/L/2;
+    return -E/L/L/2;
 }
 
 //funcion magnetizacion
