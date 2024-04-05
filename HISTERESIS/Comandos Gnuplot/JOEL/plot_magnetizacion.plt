@@ -11,4 +11,5 @@ set ytics font ",16"
 
 set xrange[0:1]
 
-plot 'C:\Users\joelg\OneDrive\Escritorio\Computacional\Trabajo Modelo de Ising\Modelo-de-Ising\HISTERESIS\Ficheros de salida\L 16\m_medio_absoluto.txt' u 1:2 w l lc rgb "purple" notitle ,\
+plot 'C:\Users\joelg\OneDrive\Escritorio\Computacional\Trabajo Modelo de Ising\Modelo-de-Ising\HISTERESIS\Ficheros de salida\L 16\Error_magnetizacion.txt' u 1:2 w l lc rgb "purple" notitle ,\
+'C:\Users\joelg\OneDrive\Escritorio\Computacional\Trabajo Modelo de Ising\Modelo-de-Ising\HISTERESIS\Ficheros de salida\L 16\Error_magnetizacion.txt' u 1:2:3 w yerrorbars

@@ -219,7 +219,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
     f8=fopen("Ficheros de salida/L 16/Error_magnetizacion.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
-                fprintf(f8,"%0.2lf\t%lf\t%lf\n",beta,m_medio[j*N_pasos+i],error_magnetizacion[j*N_pasos+i]);
+                fprintf(f8,"%0.2lf\t%lf\t%lf\n",beta,m_medio_absoluto[j*N_pasos+i],error_magnetizacion[j*N_pasos+i]);
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
@@ -258,15 +258,15 @@ void calculaValoresMedios(int N_med,double *Energia,double *Magnetizacion,double
     X[indice]=L*L*(media2Magnetizacion[indice]-mediaMagnetizacionAbsoluta[indice]*mediaMagnetizacionAbsoluta[indice]);
     var(Energia,N_med,&mediaEnergia[indice],&error_energia[indice]);
     var(Magnetizacion,N_med,&mediaMagnetizacion[indice],&error_magnetizacion[indice]);
-    error_energia[indice]=sqrt(error_energia[indice])/N_med;
-    error_magnetizacion[indice]=sqrt(error_magnetizacion[indice])/N_med;
+    error_energia[indice]=sqrt(error_energia[indice]/N_med);
+    error_magnetizacion[indice]=sqrt(error_magnetizacion[indice]/N_med);
 }
 void var(double *serie,int Numero, double *Media, double *Varianza){
 	int i;
 	for(i=0;i<Numero;i++){
 		*Varianza+=(*(serie+i)-*Media)*(*(serie+i)-*Media);
 	}
-	*Varianza=*Varianza/Numero;
+	*Varianza=*Varianza/(Numero-1);
 }
 //medir la energia
 double energia(int *s,int *xp,int *yp){ //E
