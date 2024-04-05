@@ -254,8 +254,8 @@ void calculaValoresMedios(int N_med,double *Energia,double *Magnetizacion,double
     media2Energia[indice]/=N_med;
     media2Magnetizacion[indice]/=N_med;
     mediaMagnetizacionAbsoluta[indice]=fabs(mediaMagnetizacion[indice]);
-    Cv[indice]=2*L*L*(media2Energia[indice]-mediaEnergia[indice]);
-    X[indice]=L*L*(media2Magnetizacion[indice]-mediaMagnetizacionAbsoluta[indice]);
+    Cv[indice]=2*L*L*(media2Energia[indice]-mediaEnergia[indice]*mediaEnergia[indice]);
+    X[indice]=L*L*(media2Magnetizacion[indice]-mediaMagnetizacionAbsoluta[indice]*mediaMagnetizacionAbsoluta[indice]);
     var(Energia,N_med,&mediaEnergia[indice],&error_energia[indice]);
     var(Magnetizacion,N_med,&mediaMagnetizacion[indice],&error_magnetizacion[indice]);
     error_energia[indice]=sqrt(error_energia[indice])/N_med;
