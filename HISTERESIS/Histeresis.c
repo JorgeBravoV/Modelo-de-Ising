@@ -40,10 +40,7 @@ int main(){
     int i,sentido,N_betas, N_m, N_M,n; //variables mudas
     int N_pasos;
 
-
-
-
-
+    //declaramos variables
     double beta;
     double beta_inicial;
     double beta_final;
