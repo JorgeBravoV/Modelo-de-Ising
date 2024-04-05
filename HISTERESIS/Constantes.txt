@@ -2,7 +2,7 @@ flag 0
 semilla 1234
 beta_inicial 0
 beta_final 1.0
-delta_beta 0.02
+delta_beta 0.01
 N_Ter 0
 N_med 500
 N_Met 5

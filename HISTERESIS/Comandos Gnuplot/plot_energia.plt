@@ -11,4 +11,5 @@ set ytics font ",16"
 
 set xrange[0:1]
 
-plot 'C:\Users\joelg\OneDrive\Escritorio\Computacional\Trabajo Modelo de Ising\Modelo-de-Ising\HISTERESIS\Ficheros de salida\e_medio.txt' u 1:2 w l lc rgb "dark-green" t'ENERGIA MEDIA',\
+plot 'C:\Users\joelg\OneDrive\Escritorio\Computacional\Trabajo Modelo de Ising\Modelo-de-Ising\HISTERESIS\Ficheros de salida\Error_energia.txt' u 1:2 w l lc rgb "dark-green" notitle, 
+'C:\Users\joelg\OneDrive\Escritorio\Computacional\Trabajo Modelo de Ising\Modelo-de-Ising\HISTERESIS\Ficheros de salida\Error_energia.txt' u 1:2:3 w yerrorbars "grey" notitle

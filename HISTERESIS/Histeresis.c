@@ -208,7 +208,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
     f7=fopen("Ficheros de salida/Error_energia.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
-                fprintf(f7,"%0.2lf\t%lf\n",beta,error_energia[j*N_pasos+i]);
+                fprintf(f7,"%0.2lf\t%lf\t%lf\n",beta,e_medio[j*N_pasos+i],error_energia[j*N_pasos+i]);
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
@@ -219,7 +219,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
     f8=fopen("Ficheros de salida/Error_magnetizacion.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
-                fprintf(f8,"%0.2lf\t%lf\n",beta,error_magnetizacion[j*N_pasos+i]);
+                fprintf(f8,"%0.2lf\t%lf\t%lf\n",beta,m_medio[j*N_pasos+i],error_magnetizacion[j*N_pasos+i]);
                 beta+=delta_beta;
             }
             delta_beta=-delta_beta;
