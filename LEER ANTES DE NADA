@@ -7,7 +7,7 @@ CALOR ESPECF - AZUL - 'blue'
 SUSCEPTIBILIDAD - ROJO - 'red'
 ERRORES (de energ y magnetización) - GRIS - 
 
-TERMALIZACIÓN
+TERMALIZACIÓN - LO HACE JORGE
     Analisis en L
     analisis en beta
 
@@ -47,7 +47,7 @@ Gráficas
         calor especifica
         susceptibilidad
 
-Analisis
+Analisis - LO HACE ALBA
     Beta crítica  - sacada de Cv
     error de beta 
     extrapolar al ininito
