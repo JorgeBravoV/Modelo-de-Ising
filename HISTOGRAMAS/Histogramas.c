@@ -15,7 +15,7 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=1000, N_conf=1000, N_interval=50;
+    int N_iter=1000, N_conf=15000, N_interval=50;
 
 
     srand(705);
