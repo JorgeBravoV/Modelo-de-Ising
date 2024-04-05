@@ -15,7 +15,7 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=1000, N_conf=15000, N_interval=50;
+    int N_iter=2000, N_conf=20000, N_interval=50;
 
 
     srand(705);
@@ -149,8 +149,8 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/hist_magnetization.txt", "wt");
+F=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_magnetization.txt", "wt");
 
 
 double delta;

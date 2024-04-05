@@ -1,5 +1,5 @@
 set term svg
-set output 'E:\USUARIO (NO TOCAR)\Desktop\UNIVERSIDAD\SEGUNDO\COMPUTACIONAL\Modelo-de-Ising\HISTOGRAMAS\Gráficas\L=16\hist_energy.svg'
+set output 'E:\USUARIO (NO TOCAR)\Desktop\UNIVERSIDAD\SEGUNDO\COMPUTACIONAL\Modelo-de-Ising\HISTOGRAMAS\Gráficas\L=16\BETA CRITICA\hist_energy.svg'
 
 set term svg size 1280, 720
 
