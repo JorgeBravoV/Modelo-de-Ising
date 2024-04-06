@@ -1,5 +1,5 @@
 set term svg
-set output 'C:\Users\pgadm\Downloads\Modelo-de-Ising-main\Modelo-de-Ising\HISTERESIS\Graficas\L 64\histeresis1_Cv.svg'
+set output 'C:\Users\pgadm\Downloads\Modelo-de-Ising-main\Modelo-de-Ising\HISTERESIS\Graficas\L 64\histeresis1_Cv_termalizado.svg'
 
 set term svg size 1280, 480
 set xlabel 'β' font ",18"

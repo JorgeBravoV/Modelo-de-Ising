@@ -1,5 +1,5 @@
 set term svg
-set output 'C:\Users\USUARIO\Documents\UNIZAR\Segundo\Segundo cuatri\Física Computacional\Nueva carpeta\Modelo-de-Ising\HISTERESIS\Graficas\L 16\histeresis_energia_media.svg'
+set output 'C:\Users\USUARIO\Documents\UNIZAR\Segundo\Segundo cuatri\Física Computacional\Nueva carpeta\Modelo-de-Ising\HISTERESIS\Graficas\L 16\histeresis_energia_medi.svg'
 
 set term svg size 1280, 480
 set xlabel 'β' font ",18"
