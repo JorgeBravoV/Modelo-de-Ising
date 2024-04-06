@@ -5,7 +5,7 @@
 #include <time.h>
 
 
-#define L 128
+#define L 64
 
 //para generacion de numeros aleatorios
 #define NormRANu (2.3283063671E-10F)
@@ -139,7 +139,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
     int i,j;
     double beta=beta_inicial;
     FILE *f1,*f2,*f3,*f4,*f5,*f6,*f7,*f8,*f9;
-    f1=fopen("Ficheros de salida/L 128/e_medio.txt","wt");
+    f1=fopen("Ficheros de salida/L 64/e_medio.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f1,"%0.2lf\t%lf\n",beta,e_medio[j*N_pasos+i]);
@@ -150,7 +150,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f1);
     beta=beta_inicial;
-    f2=fopen("Ficheros de salida/L 128/m_medio.txt","wt");
+    f2=fopen("Ficheros de salida/L 64/m_medio.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f2,"%0.2lf\t%lf\n",beta,m_medio[j*N_pasos+i]);
@@ -161,7 +161,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f2);
     beta=beta_inicial;
-    f3=fopen("Ficheros de salida/L 128/m_medio_cuadrado.txt","wt");
+    f3=fopen("Ficheros de salida/L 64/m_medio_cuadrado.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f3,"%0.2lf\t%lf\n",beta,m_medio_cuadrado[j*N_pasos+i]);
@@ -172,7 +172,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f3);
     beta=beta_inicial;
-    f4=fopen("Ficheros de salida/L 128/m_medio_absoluto.txt","wt");
+    f4=fopen("Ficheros de salida/L 64/m_medio_absoluto.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f4,"%0.2lf\t%lf\n",beta,m_medio_absoluto[j*N_pasos+i]);
@@ -183,7 +183,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f4);
     beta=beta_inicial;
-    f5=fopen("Ficheros de salida/L 128/X.txt","wt");
+    f5=fopen("Ficheros de salida/L 64/X.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f5,"%0.2lf\t%lf\n",beta,X[j*N_pasos+i]);
@@ -194,7 +194,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f5);
     beta=beta_inicial;
-    f6=fopen("Ficheros de salida/L 128/Cv.txt","wt");
+    f6=fopen("Ficheros de salida/L 64/Cv.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f6,"%0.2lf\t%lf\n",beta,Cv[j*N_pasos+i]);
@@ -205,7 +205,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f6);
     beta=beta_inicial;
-    f7=fopen("Ficheros de salida/L 128/Error_energia.txt","wt");
+    f7=fopen("Ficheros de salida/L 64/Error_energia.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f7,"%0.2lf\t%lf\t%lf\n",beta,e_medio[j*N_pasos+i],error_energia[j*N_pasos+i]);
@@ -216,7 +216,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f7);
     beta=beta_inicial;
-    f8=fopen("Ficheros de salida/L 128/Error_magnetizacion.txt","wt");
+    f8=fopen("Ficheros de salida/L 64/Error_magnetizacion.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f8,"%0.2lf\t%lf\t%lf\n",beta,m_medio_absoluto[j*N_pasos+i],error_magnetizacion[j*N_pasos+i]);
@@ -227,7 +227,7 @@ void escribir_fichero(double e_medio[], double m_medio[],double e_medio_cuadrado
         }
     fclose(f8);
     beta=beta_inicial;
-    f9=fopen("Ficheros de salida/L 128/e_medio_cuadrado.txt","wt");
+    f9=fopen("Ficheros de salida/L 64/e_medio_cuadrado.txt","wt");
         for(j=0;j<2;j++){
             for(i=0;i<N_pasos;i++){
                 fprintf(f9,"%0.2lf\t%lf\n",beta,e_medio_cuadrado[j*N_pasos+i]);
