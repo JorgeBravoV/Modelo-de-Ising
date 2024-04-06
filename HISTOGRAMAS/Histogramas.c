@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 16
+#define L 64
 
 
 void configura(int*s, int flag);
@@ -20,7 +20,7 @@ int main(){
 
     srand(705);
 
-    double beta=0.440686793509771;
+    double beta=0.4;
 
 
 
@@ -144,8 +144,8 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_magnetization.txt", "wt");
+F=fopen("Ficheros de salida/L=64/BETA 0,4/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=64/BETA 0,4/hist_magnetization.txt", "wt");
 
 
 double delta;

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/pgadm/Downloads/Modelo-de-Ising-main/Modelo-de-Ising/HISTERESIS",
-      "program": "c:/Users/pgadm/Downloads/Modelo-de-Ising-main/Modelo-de-Ising/HISTERESIS/build/Debug/outDebug",
+      "cwd": "c:/Users/pgadm/Downloads/Modelo-de-Ising-main/Modelo-de-Ising/HISTOGRAMAS",
+      "program": "c:/Users/pgadm/Downloads/Modelo-de-Ising-main/Modelo-de-Ising/HISTOGRAMAS/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
