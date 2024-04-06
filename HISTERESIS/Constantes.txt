@@ -3,6 +3,6 @@ semilla 1234
 beta_inicial 0
 beta_final 1.0
 delta_beta 0.02
-N_Ter 10000
+N_Ter 100
 N_med 500
 N_Met 5
