@@ -1,5 +1,5 @@
 set term svg
-set output 'E:\USUARIO (NO TOCAR)\Desktop\UNIVERSIDAD\SEGUNDO\COMPUTACIONAL\Modelo-de-Ising\HISTOGRAMAS\Gráficas\L=16\BETA CRITICA\hist_magnetization.svg'
+set output 'E:\USUARIO (NO TOCAR)\Desktop\UNIVERSIDAD\SEGUNDO\COMPUTACIONAL\Modelo-de-Ising\HISTOGRAMAS\Gráficas\L=128\BETA CRITICA\hist_magnetization.svg'
 
 set term svg size 1280, 720
 
@@ -16,5 +16,5 @@ set style line 1 lw 2
 
 set ylabel "Frecuencia" font",18"
 set xlabel "β" font",18"
-plot 'E:\USUARIO (NO TOCAR)\Desktop\UNIVERSIDAD\SEGUNDO\COMPUTACIONAL\Modelo-de-Ising\HISTOGRAMAS\Ficheros de salida\L=16\BETA CRITICA\hist_magnetization.txt' u 1:2 w boxes notitle
+plot 'E:\USUARIO (NO TOCAR)\Desktop\UNIVERSIDAD\SEGUNDO\COMPUTACIONAL\Modelo-de-Ising\HISTOGRAMAS\Ficheros de salida\L=128\BETA CRITICA\hist_magnetization.txt' u 1:2 w boxes notitle
 

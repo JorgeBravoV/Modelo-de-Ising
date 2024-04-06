@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 32
+#define L 64
 
 
 void configura(int*s, int flag);
@@ -15,7 +15,7 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=99999, N_interval=50, N_conf=1;
+    int N_iter=10000, N_interval=50, N_conf=1,intervalo=1000;
 
 
     srand(705);
@@ -48,16 +48,11 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
- FILE*f,*g;
-f=fopen("energy.txt","wt");
-g=fopen("magnetization.txt","wt");
-
-
-int flag,j,k, indice=0, t_termalizacion=10000000,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=700,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
-double memoriza_energia[N_iter*N_conf], memoriza_magnetizacion[N_iter], memoriza_delta_energia[epsilon];
+double memoriza_energia[N_iter], memoriza_magnetizacion[N_iter], memoriza_delta_energia[epsilon];
 double E_media,e_media,m_media,m_vieja,m_nueva,E_vieja,E_nueva,suma=0,suma_energia=0,suma_magnetizacion=0;
 
 
@@ -76,7 +71,6 @@ double histograma_energia[N_interval],histograma_magnetizacion[N_interval];
                 E_vieja=energia(red,x_right,y_up);
                 m_vieja=magnetizacion(red);
 
-for (k=0;k<N_conf;k++){
 
     configura(red,flag);
     for(j=0;j<t_termalizacion;j++){
@@ -85,10 +79,7 @@ for (k=0;k<N_conf;k++){
     E_vieja=energia(red,x_right,y_up);
     m_vieja=magnetizacion(red);
 
-for (i=0; i<N_iter; i++){
-
-   escribe_fichero(E_vieja,i,f);
-   guardaMagnetizacion(red,i,g);
+for (i=0; i<N_iter*intervalo; i++){
 
     iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
 
@@ -112,7 +103,7 @@ for (i=0; i<N_iter; i++){
         /*
             Si el valor absoluto de la media es baja, la medida lleva siendo estable "epsilon" iteraciones.
             Guardamos los valores que ya tiene el array "memoriza_energia" y los siguientes.
-        //
+        *//*
             t_termalizacion=i-epsilon; // El tiempo que ha sido inestable es el tiempo que llevamos menos "epsilon" iteraciones.
                 if(t_termalizacion<0)    // Sería el caso de que sea estable desde el principio.
                     t_termalizacion=0;
@@ -135,12 +126,14 @@ for (i=0; i<N_iter; i++){
     En el caso de que ya se haya alcanzado la estabilidad, mantendrá los que ya hay en el array e irá añadiendo el resto"
     */
 
- 
-           memoriza_energia[i+k*N_iter]=E_vieja;
-        memoriza_magnetizacion[i+k*N_iter]=m_vieja;
+ if(i%intervalo==0){
+           memoriza_energia[i/intervalo]=E_vieja;
+        memoriza_magnetizacion[i/intervalo]=m_vieja;
+ }
     E_vieja=E_nueva; // Dejamos la energia vieja preparada para la siguiente iteracion.
     m_vieja=m_nueva;
-    }
+ 
+    
 }
 
     
@@ -151,8 +144,8 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_magnetization.txt", "wt");
+F=fopen("hist_energy.txt", "wt");
+G=fopen("hist_magnetization.txt", "wt");
 
 
 double delta;
@@ -173,8 +166,6 @@ max=0;
         fprintf(G,"%lf %lf\n",min+i*delta,histograma_magnetizacion[i]);
     fclose(G);   
 
-   fclose(f);
-    fclose(g);
     printf("La energia media extensiva es %lf\nLa energia media intensiva es %lf\nEl tiempo de termalizacion es %d\n",E_media,e_media,t_termalizacion);
 
 
@@ -262,7 +253,7 @@ for (i=0;i<L;i++)
         /*
 
         Suponemos un cambio (red[n]=-red[n]), y calculamos la diferencia de enrgía:
-            DE = Ef-Ei = +red[n](los alrededores) + red[n](los alrededores) (En Ef red[n] es -1, y la energía cambia el signo de ambas)
+            DE = Ef-Ei = +red[n]*(los alrededores) + red[n]*(los alrededores) (En Ef red[n] es -1, y la energía cambia el signo de ambas)
             DE=2*red[n]*(red[n+x_right[j]]+red[n+x_left[j]]+red[n+y_up[i]]+red[n+y_down[i]]);
 
         Ahora, calculamos si es mas probable la configuracion de energía con el cambio, o sin el cambio
