@@ -5,7 +5,7 @@
 #include <time.h>
 
 
-#define L 64
+#define L 128
 
 //para generacion de numeros aleatorios
 #define NormRANu (2.3283063671E-10F)
