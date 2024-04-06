@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 16
+#define L 128
 
 
 void configura(int*s, int flag);
@@ -15,7 +15,7 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=2000, N_conf=20000, N_interval=50;
+    int N_iter=10000, N_interval=50, N_conf=1,intervalo=500;
 
 
     srand(705);
@@ -48,12 +48,7 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
- /*FILE*f,*g;
-f=fopen("energy.txt","wt");
-g=fopen("magnetization.txt","wt");
-*/
-
-int flag,j, indice=0, t_termalizacion=5,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=700000,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
@@ -61,8 +56,8 @@ double memoriza_energia[N_iter], memoriza_magnetizacion[N_iter], memoriza_delta_
 double E_media,e_media,m_media,m_vieja,m_nueva,E_vieja,E_nueva,suma=0,suma_energia=0,suma_magnetizacion=0;
 
 
-int k;
-double datos_energia[N_conf],datos_magnetizacion[N_conf];
+
+
 double histograma_energia[N_interval],histograma_magnetizacion[N_interval];
 
  
@@ -71,21 +66,27 @@ double histograma_energia[N_interval],histograma_magnetizacion[N_interval];
         memoriza_delta_energia[i]=L*L*L;
 
 
-
-for (k=0; k<N_conf; k++){
-                configura(red,flag);
+               
+        
                 E_vieja=energia(red,x_right,y_up);
                 m_vieja=magnetizacion(red);
 
-for (i=0; i<N_iter; i++){
 
-   // escribe_fichero(E_vieja,i,f);
-   // guardaMagnetizacion(red,i,g);
+    configura(red,flag);
+    for(j=0;j<t_termalizacion;j++){
+       iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
+    }
+    E_vieja=energia(red,x_right,y_up);
+    m_vieja=magnetizacion(red);
+
+for (i=0; i<N_iter*intervalo; i++){
 
     iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
 
     E_nueva=energia(red,x_right,y_up);
     m_nueva=magnetizacion(red);
+
+/*
 //***********************************************************************************************************************************************************
 // TODA ESTA PARTE ES PARA CALCULAR EL TIEMPO DE TERMALIZACIÓN. SI TOMAMOS ESTE TIEMPO FIJO SE DEBE QUITAR (poniendo estabilidad=1)
 
@@ -102,7 +103,7 @@ for (i=0; i<N_iter; i++){
         /*
             Si el valor absoluto de la media es baja, la medida lleva siendo estable "epsilon" iteraciones.
             Guardamos los valores que ya tiene el array "memoriza_energia" y los siguientes.
-        */
+        *//*
             t_termalizacion=i-epsilon; // El tiempo que ha sido inestable es el tiempo que llevamos menos "epsilon" iteraciones.
                 if(t_termalizacion<0)    // Sería el caso de que sea estable desde el principio.
                     t_termalizacion=0;
@@ -111,52 +112,46 @@ for (i=0; i<N_iter; i++){
 //**********************************************************************************************************************************************
 // HASTA AQUÍ SE PODRÍA QUITAR
 
+/*
     }
      if(estabilidad==0){
-        memoriza_energia[i]=E_vieja;
-        memoriza_magnetizacion[i]=m_vieja;
+        memoriza_energia[i+k*N_conf]=E_vieja;
+        memoriza_magnetizacion[i+k*N_conf]=m_vieja;
     }else if(i>=t_termalizacion){
-        memoriza_energia[i-t_termalizacion]=E_vieja;
-        memoriza_magnetizacion[i-t_termalizacion]=m_vieja;
+        memoriza_energia[i-t_termalizacion+k*N_iter]=E_vieja;
+        memoriza_magnetizacion[i-t_termalizacion+k*N_iter]=m_vieja;
     
     } /*
     En caso de que no haya estabilidad, "memoriza_energia" guardará tambien una media inestable.
     En el caso de que ya se haya alcanzado la estabilidad, mantendrá los que ya hay en el array e irá añadiendo el resto"
     */
 
+ if(i%intervalo==0){
+           memoriza_energia[i/intervalo]=E_vieja;
+        memoriza_magnetizacion[i/intervalo]=m_vieja;
+ }
     E_vieja=E_nueva; // Dejamos la energia vieja preparada para la siguiente iteracion.
     m_vieja=m_nueva;
-    }
-
-
-    suma_energia=0;
-        for (i=0;i<(N_iter-t_termalizacion);i++){
-            suma_energia+=memoriza_energia[i];
-        }
-    E_media=suma_energia/(N_iter-t_termalizacion); // Ya tenemos la energia extensiva media.
-    e_media=E_media/(2*L*L); // Y esta es la energía intensiva media (es decir, está entre siempre -1, y 1).
-    datos_energia[k]=e_media;
-
-  suma_magnetizacion=0;
-        for (i=0;i<(N_iter-t_termalizacion);i++){
-            suma_magnetizacion+=memoriza_magnetizacion[i];
-        }
-    m_media=suma_magnetizacion/(N_iter-t_termalizacion);
-    datos_magnetizacion[k]=m_media;
+ 
+    
 }
+
+    
+
+
 
 FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=16/BETA CRITICA/hist_magnetization.txt", "wt");
+F=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_magnetization.txt", "wt");
 
 
 double delta;
 double min=0, max=1;
 
-    Histogram_energy(datos_energia,histograma_energia,N_conf,N_interval,&delta,&min,&max);
+    Histogram_energy(memoriza_energia,histograma_energia,N_iter,N_interval,&delta,&min,&max);
 
   for (i=0;i<N_interval;i++)
         fprintf(F,"%lf %lf\n",min+i*delta,histograma_energia[i]);
@@ -165,16 +160,14 @@ double min=0, max=1;
 min=0;
 max=0;
         
-    Histogram_magnetization(datos_magnetizacion,histograma_magnetizacion,N_conf,N_interval,&delta,&min,&max);
+    Histogram_magnetization(memoriza_magnetizacion,histograma_magnetizacion,N_iter,N_interval,&delta,&min,&max);
 
      for (i=0;i<N_interval;i++)
         fprintf(G,"%lf %lf\n",min+i*delta,histograma_magnetizacion[i]);
     fclose(G);   
 
-   /* fclose(f);
-    fclose(g);
     printf("La energia media extensiva es %lf\nLa energia media intensiva es %lf\nEl tiempo de termalizacion es %d\n",E_media,e_media,t_termalizacion);
-*/
+
 
  // guardaConfiguracion(red);
 }

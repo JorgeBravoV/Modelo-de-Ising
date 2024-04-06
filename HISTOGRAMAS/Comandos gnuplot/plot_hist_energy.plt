@@ -15,5 +15,5 @@ set xrange[a:b]
 set style line 1 lw 2
 
 set ylabel "Frecuencia" font",18"
-set xlabel "β" font",18"
+set xlabel "Energía" font",18"
 plot 'E:\USUARIO (NO TOCAR)\Desktop\UNIVERSIDAD\SEGUNDO\COMPUTACIONAL\Modelo-de-Ising\HISTOGRAMAS\Ficheros de salida\L=16\BETA CRITICA\hist_energy.txt' u 1:2 w boxes lc rgb "#008000" notitle
