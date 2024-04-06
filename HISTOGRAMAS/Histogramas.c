@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 64
+#define L 128
 
 
 void configura(int*s, int flag);
@@ -15,7 +15,7 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=10000, N_interval=50, N_conf=1,intervalo=1000;
+    int N_iter=10000, N_interval=50, N_conf=1,intervalo=500;
 
 
     srand(705);
@@ -48,7 +48,7 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
-int flag,j, indice=0, t_termalizacion=700,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=700000,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
@@ -144,8 +144,8 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("hist_energy.txt", "wt");
-G=fopen("hist_magnetization.txt", "wt");
+F=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_magnetization.txt", "wt");
 
 
 double delta;
