@@ -48,7 +48,7 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
-int flag,j, indice=0, t_termalizacion=70000,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=700000,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
