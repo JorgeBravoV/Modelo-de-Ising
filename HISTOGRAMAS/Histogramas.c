@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 128
+#define L 64
 
 
 void configura(int*s, int flag);
@@ -15,7 +15,7 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=10000, N_interval=50, N_conf=1,intervalo=500;
+    int N_iter=30000, N_interval=50, N_conf=1,intervalo=10000;
 
 
     srand(705);
@@ -48,7 +48,7 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
-int flag,j, indice=0, t_termalizacion=700000,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=700,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
@@ -127,7 +127,7 @@ for (i=0; i<N_iter*intervalo; i++){
     */
 
  if(i%intervalo==0){
-           memoriza_energia[i/intervalo]=E_vieja;
+           memoriza_energia[i/intervalo]=E_vieja/(2*L*L);
         memoriza_magnetizacion[i/intervalo]=m_vieja;
  }
     E_vieja=E_nueva; // Dejamos la energia vieja preparada para la siguiente iteracion.
@@ -144,8 +144,8 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_magnetization.txt", "wt");
+F=fopen("Ficheros de salida/L=64/BETA 0,46/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=64/BETA 0,46/hist_magnetization.txt", "wt");
 
 
 double delta;
