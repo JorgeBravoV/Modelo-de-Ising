@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 64
+#define L 128
 
 
 void configura(int*s, int flag);
@@ -15,12 +15,12 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=30000, N_interval=50, N_conf=1,intervalo=1000;
+    int N_iter=3000, N_interval=50, N_conf=1,intervalo=7000;
 
 
     srand(705);
 
-    double beta=0.4;
+    double beta=0.46;
 
 
 
@@ -48,7 +48,7 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
-int flag,j, indice=0, t_termalizacion=7000,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=700,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
@@ -83,6 +83,12 @@ for (i=0; i<N_iter*intervalo; i++){
 
     iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
 
+    if(i%N_iter*intervalo==0){
+        float porcentaje = ((float)i / N_iter*intervalo) * 100.0;
+            printf("Progreso: %.2f%%\n", porcentaje/(N_iter*intervalo*3));
+
+    }
+
     E_nueva=energia(red,x_right,y_up);
     m_nueva=magnetizacion(red);
 
@@ -103,7 +109,7 @@ for (i=0; i<N_iter*intervalo; i++){
         /*
             Si el valor absoluto de la media es baja, la medida lleva siendo estable "epsilon" iteraciones.
             Guardamos los valores que ya tiene el array "memoriza_energia" y los siguientes.
-        *//*
+        //
             t_termalizacion=i-epsilon; // El tiempo que ha sido inestable es el tiempo que llevamos menos "epsilon" iteraciones.
                 if(t_termalizacion<0)    // Sería el caso de que sea estable desde el principio.
                     t_termalizacion=0;
@@ -144,8 +150,8 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/L=64/BETA 0,4/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=64/BETA 0,4/hist_magnetization.txt", "wt");
+F=fopen("Ficheros de salida/L=128/BETA 0,46/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=128/BETA 0,46/hist_magnetization.txt", "wt");
 
 
 double delta;
@@ -253,7 +259,7 @@ for (i=0;i<L;i++)
         /*
 
         Suponemos un cambio (red[n]=-red[n]), y calculamos la diferencia de enrgía:
-            DE = Ef-Ei = +red[n]*(los alrededores) + red[n]*(los alrededores) (En Ef red[n] es -1, y la energía cambia el signo de ambas)
+            DE = Ef-Ei = +red[n](los alrededores) + red[n](los alrededores) (En Ef red[n] es -1, y la energía cambia el signo de ambas)
             DE=2*red[n]*(red[n+x_right[j]]+red[n+x_left[j]]+red[n+y_up[i]]+red[n+y_down[i]]);
 
         Ahora, calculamos si es mas probable la configuracion de energía con el cambio, o sin el cambio
