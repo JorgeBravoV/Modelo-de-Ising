@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-<<<<<<< HEAD
-#define L 128
-=======
 #define L 16
->>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
 
 
 void configura(int*s, int flag);
@@ -94,20 +90,7 @@ double histograma_energia[N_interval],histograma_magnetizacion[N_interval];
 
 for (i=0; i<N_iter*intervalo; i++){
 
-    if(i%100000==0){
-        printf("a");
-    }
-
     iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
-
-<<<<<<< HEAD
-    if(i%N_iter*intervalo==0){
-        float porcentaje = ((float)i / N_iter*intervalo) * 100.0;
-            printf("Progreso: %.2f%%\n", porcentaje/(N_iter*intervalo*3));
-
-    }
-=======
->>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
 
     E_nueva=energia(red,x_right,y_up);
     m_nueva=magnetizacion(red);
@@ -322,40 +305,6 @@ void guardaMagnetizacion(int*s,int iteracion,FILE*f){
 
 
 // Hay dos histogramas praparados porque uno de ellos tiene que cambiar el signo de la energia.
-
-void Histogram_energy(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max)
-{
-//Definimos mínimo y máximo:
-*min=100;
-*max=0;
-
-int i;
-for (i=-0;i<N_data;i++){
-if(-input[i]<*min)
-*min=-input[i];
-if (-input[i]>*max)
-*max=-input[i];
-}
-
-//Definimos los numeros que contiene cada intervalo como delta:
-*delta=(*max-*min)/N_interval;
-//Definimos un entero que serán las celdas en las que estarán los diferentes números.
-int celda;
-//PARTE IMPORTANTE DEL PROGRAMA:
-for (i=0;i<N_interval;i++)
-output[i]=0;
-for (i=0;i<N_data;i++){
-celda=(int)((-input[i]-(*min))/(*delta));
-if(celda==N_interval)
-celda=celda-1;
-output[celda]++;
-}
-//Normalizamos: 1=suma(delta*altura)*A=A*delta*suma[i]=A*delta*N_data
-double A;
-A=1/(*delta*N_data);
-for (i=0;i<N_interval;i++)
-output[i]=A*output[i];
-}
 
 //*****************************************************************************************************************************************************
 
