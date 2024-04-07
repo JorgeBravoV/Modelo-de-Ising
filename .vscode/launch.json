@@ -8,8 +8,13 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
+<<<<<<< HEAD
       "cwd": "c:/Users/pablo/OneDrive/Escritorio/FISICA/Segundo Física/S2/Física computacional/Modelo-de-Ising/HISTOGRAMAS",
       "program": "c:/Users/pablo/OneDrive/Escritorio/FISICA/Segundo Física/S2/Física computacional/Modelo-de-Ising/HISTOGRAMAS/build/Debug/outDebug",
+=======
+      "cwd": "e:/USUARIO (NO TOCAR)/Desktop/UNIVERSIDAD/SEGUNDO/COMPUTACIONAL/Modelo-de-Ising/HISTOGRAMAS",
+      "program": "e:/USUARIO (NO TOCAR)/Desktop/UNIVERSIDAD/SEGUNDO/COMPUTACIONAL/Modelo-de-Ising/HISTOGRAMAS/build/Debug/outDebug",
+>>>>>>> 03e185af3a8171309edd07eb83cfb4538256d515
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

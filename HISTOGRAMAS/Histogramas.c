@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+<<<<<<< HEAD
+#define L 128
+=======
 #define L 64
+>>>>>>> 2c884ce715e9aa6def3011bcacf93d275cbd467c
 
 
 void configura(int*s, int flag);
@@ -15,12 +19,24 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=30000, N_interval=50, N_conf=1,intervalo=10000;
+<<<<<<< HEAD
+    int N_iter=3000, N_interval=50, N_conf=1,intervalo=10000;
+=======
+    int N_iter=30000, N_interval=50, N_conf=1,intervalo=1000;
+>>>>>>> 2c884ce715e9aa6def3011bcacf93d275cbd467c
 
 
     srand(705);
 
+<<<<<<< HEAD
     double beta=0.46;
+=======
+<<<<<<< HEAD
+    double beta=0.440686793509771; //beta critica
+=======
+    double beta=0.4;
+>>>>>>> 2c884ce715e9aa6def3011bcacf93d275cbd467c
+>>>>>>> 03e185af3a8171309edd07eb83cfb4538256d515
 
 
 
@@ -48,7 +64,7 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
-int flag,j, indice=0, t_termalizacion=700,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=7000,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
@@ -81,7 +97,12 @@ double histograma_energia[N_interval],histograma_magnetizacion[N_interval];
 
 for (i=0; i<N_iter*intervalo; i++){
 
+    if(i%100000==0){
+        printf("a");
+    }
+
     iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
+
 
     E_nueva=energia(red,x_right,y_up);
     m_nueva=magnetizacion(red);
@@ -144,8 +165,13 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/L=64/BETA 0,46/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=64/BETA 0,46/hist_magnetization.txt", "wt");
+<<<<<<< HEAD
+F=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_magnetization.txt", "wt");
+=======
+F=fopen("Ficheros de salida/L=64/BETA 0,4/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=64/BETA 0,4/hist_magnetization.txt", "wt");
+>>>>>>> 2c884ce715e9aa6def3011bcacf93d275cbd467c
 
 
 double delta;
