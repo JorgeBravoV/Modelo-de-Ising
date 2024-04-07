@@ -20,7 +20,7 @@ int main(){
 
     srand(705);
 
-    double beta=0.440686793509771;
+    double beta=0.46;
 
 
 
