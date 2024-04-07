@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+<<<<<<< HEAD
 #define L 128
+=======
+#define L 16
+>>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
 
 
 void configura(int*s, int flag);
@@ -15,12 +19,21 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
+<<<<<<< HEAD
     int N_iter=3000, N_interval=50, N_conf=1,intervalo=7000;
+=======
+    int N_iter=3000, N_interval=200, N_conf=1,intervalo=1;
+>>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
 
 
     srand(705);
 
+<<<<<<< HEAD
     double beta=0.46;
+=======
+
+    double beta=0.440686793509771;
+>>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
 
 
 
@@ -81,13 +94,20 @@ double histograma_energia[N_interval],histograma_magnetizacion[N_interval];
 
 for (i=0; i<N_iter*intervalo; i++){
 
+    if(i%100000==0){
+        printf("a");
+    }
+
     iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
 
+<<<<<<< HEAD
     if(i%N_iter*intervalo==0){
         float porcentaje = ((float)i / N_iter*intervalo) * 100.0;
             printf("Progreso: %.2f%%\n", porcentaje/(N_iter*intervalo*3));
 
     }
+=======
+>>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
 
     E_nueva=energia(red,x_right,y_up);
     m_nueva=magnetizacion(red);
@@ -150,8 +170,15 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
+<<<<<<< HEAD
 F=fopen("Ficheros de salida/L=128/BETA 0,46/hist_energy.txt", "wt");
 G=fopen("Ficheros de salida/L=128/BETA 0,46/hist_magnetization.txt", "wt");
+=======
+
+F=fopen("Ficheros de salida/L=16/PAVERENERGIA/hist_energy.txt", "wt");
+
+
+>>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
 
 
 double delta;
