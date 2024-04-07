@@ -3,8 +3,8 @@ set output 'C:\Users\USUARIO\Documents\UNIZAR\Segundo\Segundo cuatri\Física Com
 
 set term svg size 1280, 720
 
-b = 0.7
-a = 0.9
+b = 0.9
+a = 0.7
 
 set xtics font ",16" 
 set ytics font ",16"
