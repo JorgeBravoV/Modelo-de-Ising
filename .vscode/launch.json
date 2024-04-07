@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/USUARIO/Documents/UNIZAR/Segundo/Segundo cuatri/Física Computacional/Nueva carpeta/Modelo-de-Ising/HISTOGRAMAS",
-      "program": "c:/Users/USUARIO/Documents/UNIZAR/Segundo/Segundo cuatri/Física Computacional/Nueva carpeta/Modelo-de-Ising/HISTOGRAMAS/build/Debug/outDebug",
+      "cwd": "e:/USUARIO (NO TOCAR)/Desktop/UNIVERSIDAD/SEGUNDO/COMPUTACIONAL/Modelo-de-Ising/HISTOGRAMAS",
+      "program": "e:/USUARIO (NO TOCAR)/Desktop/UNIVERSIDAD/SEGUNDO/COMPUTACIONAL/Modelo-de-Ising/HISTOGRAMAS/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
