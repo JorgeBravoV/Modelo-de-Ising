@@ -9,7 +9,7 @@ a = -1
 set xtics font ",16" 
 set ytics font ",16"
 
-set yrange[0:3]
+set yrange[0:]
 set xrange[a:b]
 
 set style line 1 lw 2

@@ -10,26 +10,19 @@ double magnetizacion(int*s);
 void guardaConfiguracion(int*s);
 void escribe_fichero(double energia,int iteracion,FILE*f);
 void guardaMagnetizacion(int*s,int iteracion,FILE*f);
-void Histogram_energy(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max);
-void Histogram_magnetization(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max);
+void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max);
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-<<<<<<< HEAD
-    int N_iter=3000, N_interval=50, N_conf=1,intervalo=7000;
-=======
-    int N_iter=3000, N_interval=200, N_conf=1,intervalo=1;
->>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
+// CÓDIGO PARA CAMBIAR LA ENERGIA
 
+    int N_iter=99999, N_interval=20, N_conf=1,intervalo=1;
+
+// Cambiar solo N_iter y N_interval
 
     srand(705);
 
-<<<<<<< HEAD
-    double beta=0.46;
-=======
-
-    double beta=0.440686793509771;
->>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
+    double beta=0.45;
 
 
 
@@ -57,7 +50,7 @@ int main(){
 // Ya hemos definido los direccionemientos.
 // Llevamos a cabo iteraciones de Monte Carlo.
 
-int flag,j, indice=0, t_termalizacion=700,estabilidad=0;
+int flag,j, indice=0, t_termalizacion=7000,estabilidad=0;
 int epsilon=5;
 flag=0;
 int red[L*L];
@@ -136,7 +129,7 @@ for (i=0; i<N_iter*intervalo; i++){
     */
 
  if(i%intervalo==0){
-           memoriza_energia[i/intervalo]=E_vieja/(2*L*L);
+        memoriza_energia[i/intervalo]=E_vieja/(2*L*L);
         memoriza_magnetizacion[i/intervalo]=m_vieja;
  }
     E_vieja=E_nueva; // Dejamos la energia vieja preparada para la siguiente iteracion.
@@ -149,25 +142,16 @@ for (i=0; i<N_iter*intervalo; i++){
 
 
 
-FILE*F,*G;
+FILE*F;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-<<<<<<< HEAD
-F=fopen("Ficheros de salida/L=128/BETA 0,46/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=128/BETA 0,46/hist_magnetization.txt", "wt");
-=======
-
-F=fopen("Ficheros de salida/L=16/PAVERENERGIA/hist_energy.txt", "wt");
-
-
->>>>>>> aeaa1e445a0f9125c5fd9282aa9b1e3aa7f236c1
-
-
+F=fopen("Ficheros de salida/L=128/BETA 0,43/hist_energy.txt", "wt");
+//G=fopen("Ficheros de salida/L=128/BETA 0,43/hist_magnetization.txt", "wt")
 double delta;
 double min=0, max=1;
 
-    Histogram_energy(memoriza_energia,histograma_energia,N_iter,N_interval,&delta,&min,&max);
+    Histogram(memoriza_energia,histograma_energia,N_iter,N_interval,&delta,&min,&max);
 
   for (i=0;i<N_interval;i++)
         fprintf(F,"%lf %lf\n",min+i*delta,histograma_energia[i]);
@@ -175,13 +159,13 @@ double min=0, max=1;
     
 min=0;
 max=0;
-        
-    Histogram_magnetization(memoriza_magnetizacion,histograma_magnetizacion,N_iter,N_interval,&delta,&min,&max);
+   /*     
+    Histogram(memoriza_magnetizacion,histograma_magnetizacion,N_iter,N_interval,&delta,&min,&max);
 
      for (i=0;i<N_interval;i++)
         fprintf(G,"%lf %lf\n",min+i*delta,histograma_magnetizacion[i]);
     fclose(G);   
-
+*/
     printf("La energia media extensiva es %lf\nLa energia media intensiva es %lf\nEl tiempo de termalizacion es %d\n",E_media,e_media,t_termalizacion);
 
 
@@ -308,7 +292,7 @@ void guardaMagnetizacion(int*s,int iteracion,FILE*f){
 
 //*****************************************************************************************************************************************************
 
-void Histogram_magnetization(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max)
+void Histogram(double *input, double *output, int N_data, int N_interval, double *delta, double *min, double *max)
 {
 //Definimos mínimo y máximo:
 *min=100;
