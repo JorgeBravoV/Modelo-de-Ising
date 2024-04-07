@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 64
+#define L 16
 
 
 void configura(int*s, int flag);
@@ -15,13 +15,13 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=3000, N_interval=20, N_conf=1,intervalo=1;
+    int N_iter=3000, N_interval=200, N_conf=1,intervalo=1;
 
 
     srand(705);
 
 
-    double beta=0.46;
+    double beta=0.440686793509771;
 
 
 
@@ -151,7 +151,7 @@ FILE*F,*G;
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
 
-F=fopen("Ficheros de salida/L=64/BETA 0,46/hist_energy.txt", "wt");
+F=fopen("Ficheros de salida/L=16/PAVERENERGIA/hist_energy.txt", "wt");
 
 
 
