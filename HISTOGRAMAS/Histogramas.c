@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define L 16
+#define L 128
 
 
 void configura(int*s, int flag);
@@ -15,12 +15,12 @@ void Histogram_magnetization(double *input, double *output, int N_data, int N_in
 void iteraMonteCarlo(int*s, double beta, int *x_right, int *x_left, int *y_up, int *y_down);
 int main(){
 
-    int N_iter=30000, N_interval=50, N_conf=1,intervalo=10000;
+    int N_iter=3000, N_interval=50, N_conf=1,intervalo=10000;
 
 
     srand(705);
 
-    double beta=0.440686793509771;
+    double beta=0.440686793509771; //beta critica
 
 
 
@@ -81,7 +81,12 @@ double histograma_energia[N_interval],histograma_magnetizacion[N_interval];
 
 for (i=0; i<N_iter*intervalo; i++){
 
+    if(i%100000==0){
+        printf("a");
+    }
+
     iteraMonteCarlo(red,beta,x_right,x_left,y_up,y_down);
+
 
     E_nueva=energia(red,x_right,y_up);
     m_nueva=magnetizacion(red);
@@ -144,8 +149,8 @@ FILE*F,*G;
 
    // escribe_fichero(E_vieja,i,f);
    // guardaMagnetizacion(red,i,g);
-F=fopen("Ficheros de salida/L=64/BETA CRITICA/hist_energy.txt", "wt");
-G=fopen("Ficheros de salida/L=64/BETA CRITICA/hist_magnetization.txt", "wt");
+F=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_energy.txt", "wt");
+G=fopen("Ficheros de salida/L=128/BETA CRITICA/hist_magnetization.txt", "wt");
 
 
 double delta;
