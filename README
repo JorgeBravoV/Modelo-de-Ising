@@ -1,0 +1,39 @@
+*****************   MODELO DE ISING **********************
+Curso: 2023/2024
+Asignatura: Física Computacional
+Autores:
+    - Jorge Bravo
+    - Joel Gracia
+    - Alba Izaguerri
+    - Pablo Cuesta
+    - Pablo Gracía
+
+
+*** OBJETIVOS ***
+
+En este proyecto se trata de analizar las características principales del Modelo de Ising: 
+
+    - El comportamiento de magnitudes como la energía, la manetización, el calor específico y la susceptibilidad
+    - La dependencia de la dinámica del sistema con la temperatura. Observar la transición de fase a T_c.
+    - Cálculo de la temperatura crítica T_c.
+    - Observar el fenómeno de la histéresis al someter el sistema a un campo magnético.
+
+
+*** MÉTODOS ***
+
+    - Definimos una red de spines de tamaño L x L (L = 16, 32, 64, 128).
+    - Definimos las condiciones de contorno del problema como periódicas
+    - Realizamos una simulación de Monte Carlo empleando el algoritmo de Metropolis
+    - Sometemos al sistema a distintas temperaturas y campos magnéticos externos
+
+
+*** TECNOLOGIAS ***
+
+    - El grueso del programa está escrito en C/C++
+    - Todos los gráficos los obtenemos mediante GnuPlot.
+
+
+*** CONTRIBUCIONES ***
+
+    - La escritura de los códigos en C fue realizada por Jorge, Joel y Alba
+    - La generación de las gráficas fue hecha por todos los componentes del grupo
